@@ -8,14 +8,27 @@ use Illuminate\Support\Str;
 new class extends Component {
     public array $urls = [];
 
+    public function mount(): void
+    {
+        Url::truncate();
+    }
+
     public function createNewWebhook(): void
     {
-        $characters = new Characters();
-
         $url = Url::query()->create([
-            'endpoint' => Str::of($characters->getRandomCharacter())->slug(),
+            'endpoint' => $this->getSlug(),
         ]);
         $this->urls[] = $url->endpoint;
+    }
+
+    private function getSlug(): string
+    {
+        $character = new Characters();
+        $character = $character->getRandomCharacter();
+
+        $slug = Str::of($character)->slug();
+
+        return Url::query()->whereEndpoint($slug)->exists() ? $this->getSlug() : $slug;
     }
 }; ?>
 
