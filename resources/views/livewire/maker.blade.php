@@ -32,13 +32,23 @@ new class extends Component {
     }
 }; ?>
 
-<div>
-    <button wire:click="createNewWebhook">
-        Novo Webhook
-    </button>
+<div class="grid grid-cols-2 gap-4 h-full p-10">
+    <div class="bg-slate-900 rounded-lg p-4">
+        <button class="bg-yellow-500 rounded-lg shadow px-4 text-slate-900 hover:bg-opacity-80 m-4"
+            wire:click="createNewWebhook">
+            Novo Webhook
+        </button>
 
-    @foreach ($this->urls as $url)
-        <li>{{ $url }}</li>
-    @endforeach
+        <ul class="overflow-y-auto">
+            @foreach ($this->urls as $url)
+                <li>{{ $url }}</li>
+            @endforeach
+        </ul>
+    </div>
+
+    <div class="bg-slate-900 rounded-lg p-4 h-screen overflow-y-auto">
+
+    </div>
+
 
 </div>
